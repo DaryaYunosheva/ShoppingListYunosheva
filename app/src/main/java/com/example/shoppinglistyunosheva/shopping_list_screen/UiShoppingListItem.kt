@@ -30,6 +30,7 @@ import com.example.shoppinglistyunosheva.R
 import com.example.shoppinglistyunosheva.data.ShoppingListItem
 import com.example.shoppinglistyunosheva.ui.theme.Green
 import com.example.shoppinglistyunosheva.ui.theme.GrayPink
+import com.example.shoppinglistyunosheva.utils.ProgressHelper
 import com.example.shoppinglistyunosheva.utils.Routes
 
 
@@ -81,7 +82,7 @@ fun UiShoppingListItem(
                     modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 5.dp),
-                    progress = 0.5f
+                    progress = ProgressHelper.getProgress(item.allItemsCount, item.allSelectedItemsCount)
                 )
             }
         }
