@@ -1,6 +1,6 @@
 package com.example.shoppinglistyunosheva.add_item_screen
 
-import android.util.Log
+
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel

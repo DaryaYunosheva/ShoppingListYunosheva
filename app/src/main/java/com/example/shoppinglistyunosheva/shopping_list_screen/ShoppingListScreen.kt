@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
@@ -20,7 +19,6 @@ import com.example.shoppinglistyunosheva.dialog.MainDialog
 import com.example.shoppinglistyunosheva.ui.theme.GrayDark
 import com.example.shoppinglistyunosheva.ui.theme.GrayLight
 import com.example.shoppinglistyunosheva.utils.UiEvent
-import kotlinx.coroutines.flow.collect
 
 @Composable
 fun ShoppingListScreen(

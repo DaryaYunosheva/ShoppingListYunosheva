@@ -8,8 +8,6 @@ import com.example.shoppinglistyunosheva.data.ShoppingListItem
 import com.example.shoppinglistyunosheva.data.ShoppingListRepository
 import com.example.shoppinglistyunosheva.dialog.DialogController
 import com.example.shoppinglistyunosheva.dialog.DialogEvent
-import com.example.shoppinglistyunosheva.shopping_list_screen.ShoppingListEvent
-import com.example.shoppinglistyunosheva.utils.UiEvent
 import com.example.shoppinglistyunosheva.utils.getCurrentTime
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
