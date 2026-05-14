@@ -8,8 +8,12 @@ import com.example.shoppinglistyunosheva.data.ShoppingListItem
 import com.example.shoppinglistyunosheva.data.ShoppingListRepository
 import com.example.shoppinglistyunosheva.dialog.DialogController
 import com.example.shoppinglistyunosheva.dialog.DialogEvent
+import com.example.shoppinglistyunosheva.utils.Routes
+import com.example.shoppinglistyunosheva.utils.UiEvent
 import com.example.shoppinglistyunosheva.utils.getCurrentTime
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,6 +21,9 @@ import javax.inject.Inject
 class MainScreenViewModel @Inject constructor(
     private val repository: ShoppingListRepository
 ): ViewModel(), DialogController {
+
+    private val _uiEvent = Channel<UiEvent>() //передатчик событий, используем только в этом классе
+    val uiEvent = _uiEvent.receiveAsFlow() //получатель
 
 
     override var dialogTitle = mutableStateOf("Название списка")
@@ -29,6 +36,9 @@ class MainScreenViewModel @Inject constructor(
         private set
 
     override var showEditableText = mutableStateOf(true)
+        private set
+
+    var showFAB = mutableStateOf(true)
         private set
 
     fun onEvent(event: MainScreenEvent){
@@ -52,6 +62,19 @@ class MainScreenViewModel @Inject constructor(
                 openDialog.value = true
 
             }
+
+            is MainScreenEvent.Navigate -> {
+                sendUiEvent(UiEvent.Navigate(event.route))
+                if (event.route == Routes.ABOUT || event.route == Routes.SETTINGS){
+                    showFAB.value = false
+                }
+                else {
+                    showFAB.value = true
+                }
+            }
+            is MainScreenEvent.NavigateMain -> {
+                sendUiEvent(UiEvent.NavigateMain(event.route))
+            }
         }
     }
 
@@ -70,6 +93,12 @@ class MainScreenViewModel @Inject constructor(
             is DialogEvent.OnTextChange -> {
                 editTableText.value = event.text
             }
+        }
+    }
+
+    private fun sendUiEvent(event: UiEvent){
+        viewModelScope.launch {
+            _uiEvent.send(event)
         }
     }
 }
