@@ -18,6 +18,7 @@ import com.example.shoppinglistyunosheva.R
 import com.example.shoppinglistyunosheva.dialog.MainDialog
 import com.example.shoppinglistyunosheva.navigation.NavigationGraph
 import com.example.shoppinglistyunosheva.ui.theme.BlueLight
+import com.example.shoppinglistyunosheva.utils.Routes
 import com.example.shoppinglistyunosheva.utils.UiEvent
 
 
@@ -56,7 +57,7 @@ fun MainScreen(
         floatingActionButton = {
             if (viewModel.showFAB.value) FloatingActionButton(
                 onClick = {
-                    viewModel.onEvent(MainScreenEvent.OnShowEditDialog)
+                    viewModel.onEvent(MainScreenEvent.OnNewItemClick(currentRoute ?: Routes.SHOPPING_LIST))
                 },
                 containerColor = BlueLight
             ) {

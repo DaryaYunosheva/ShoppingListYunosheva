@@ -58,8 +58,14 @@ class MainScreenViewModel @Inject constructor(
                 }
             }
 
-            is MainScreenEvent.OnShowEditDialog -> {
-                openDialog.value = true
+            is MainScreenEvent.OnNewItemClick -> {
+                if(event.route == Routes.SHOPPING_LIST){
+                    openDialog.value = true
+                }
+                else{
+                    sendUiEvent(UiEvent.NavigateMain(Routes.NEW_NOTE))
+                }
+
 
             }
 

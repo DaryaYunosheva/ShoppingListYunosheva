@@ -71,7 +71,7 @@ fun NewNoteScreen(
                         },
                         label = {
                             Text(
-                                text = "Заголовок",
+                                text = "Заголовок...",
                                 fontSize = 14.sp,
                                 color = LightText
                             )
