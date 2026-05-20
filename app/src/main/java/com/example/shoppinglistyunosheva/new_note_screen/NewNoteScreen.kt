@@ -15,23 +15,38 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.example.shoppinglistyunosheva.R
 import com.example.shoppinglistyunosheva.ui.theme.BlueLight
 import com.example.shoppinglistyunosheva.ui.theme.DarkText
 import com.example.shoppinglistyunosheva.ui.theme.GrayLight
 import com.example.shoppinglistyunosheva.ui.theme.LightText
+import com.example.shoppinglistyunosheva.utils.UiEvent
 
-@Preview(showBackground = true)
 @Composable
-fun NewNoteScreen() {
+fun NewNoteScreen(
+    viewModel: NewNoteViewModel = hiltViewModel(),
+    onPopBackStack: () -> Unit
+) {
+    LaunchedEffect(key1 = true) {
+        viewModel.uiEvent.collect { uiEvent ->
+            when(uiEvent){
+                is UiEvent.PopBackStack -> {
+                    onPopBackStack()
+                }
+                else -> {}
+            }
+        }
+    }
+
     Box(modifier = Modifier
         .fillMaxSize()
         .background(color = GrayLight)
@@ -50,9 +65,9 @@ fun NewNoteScreen() {
                 ) {
                     TextField(
                         modifier = Modifier.weight(1f).padding(top = 7.dp),
-                        value = "",
-                        onValueChange = {
-
+                        value = viewModel.title,
+                        onValueChange = {text ->
+                            viewModel.onEvent(NewNoteEvent.OnTitleChange(text))
                         },
                         label = {
                             Text(
@@ -77,7 +92,7 @@ fun NewNoteScreen() {
 
                     IconButton(
                         onClick = {
-
+                            viewModel.onEvent(NewNoteEvent.OnSave)
                         }
                     ) {
                         Icon(
@@ -89,13 +104,14 @@ fun NewNoteScreen() {
                 }
 
                 TextField(
-                    value = "",
-                    onValueChange = {
-
+                    value = viewModel.description,
+                    onValueChange = { text ->
+                        viewModel.onEvent(NewNoteEvent.OnDescriptionChange(text))
                     },
                     label = {
                         Text(text = "Описание...",
-                            fontSize = 14.sp)
+                            fontSize = 14.sp,
+                            color = LightText)
                     },
                     colors = TextFieldDefaults.colors(
                         focusedIndicatorColor = Color.Transparent,
